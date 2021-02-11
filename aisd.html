@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Code Challenge</title>
+  </head>
+  <body>
+    <h1>Code Challenge</h1>
+    <h2>Output</h2>
+
+    <div id="min-age"></div>
+    <div id="max-age"></div>
+    <div id="young-average"></div>
+
+    <script type="text/javascript">
+      //create a person object
+      //attributes of name and age
+      class Person {
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+        }
+      }
+
+      // function finding max age accepts person array
+      function findMaxAge(arr) {
+        let max = 0;
+        //loop through array
+        for (let i = 0; i < arr.length; i++) {
+          // if current age is greater than max set max to current age
+          if (arr[i].age > max) {
+            max = arr[i].age;
+          }
+        }
+        return max;
+      }
+
+      // function finding min age
+      function findMinAge(arr) {
+        let min = 1000;
+        for (let i = 0; i < arr.length; i++) {
+          // check if current age is less than the current minimum
+          if (arr[i].age < min) {
+            //set min to curr min
+            min = arr[i].age;
+          }
+        }
+
+        return min;
+      }
+
+      function findAveAge(arr) {
+        let thirtyCount = 0;
+        let thirtyTotal = 0;
+        for (let i = 0; i < arr.length; i++) {
+          //check if current age is less than or equal to 30
+          if (arr[i].age <= 30) {
+            thirtyCount++; // increment count
+            thirtyTotal = thirtyTotal + arr[i].age; //add age to total
+          }
+        }
+
+        return thirtyTotal / thirtyCount;
+      }
+
+      function sortYoungestToOldest(arr) {
+        // loop through array
+        for (let i = 0; i < arr.length - 1; i++) {
+          minIndex = i;
+
+          // loop through the rest of array
+          for (let j = i + 1; j < arr.length; j++) {
+            // if current j age is less curr min age assign j to minindex
+            if (arr[j].age < arr[minIndex].age) {
+              minIndex = j;
+            }
+          }
+
+          //set current value to min
+          temp = arr[i];
+          arr[i] = arr[minIndex];
+          arr[minIndex] = temp;
+        }
+
+        return arr;
+      }
+
+      //create person object instances
+      let person1 = new Person("John Smith", 10);
+      let person2 = new Person("Katherine Jones", 20);
+      let person3 = new Person("Rick Perry", 55);
+      let person4 = new Person("Johnny Walker", 80);
+      let person5 = new Person("Amy Anderson", 30);
+
+      //create array of person objects
+      let personArr = [person1, person2, person3, person4, person5];
+
+      //call functions to set the values we want
+      let maxAge = findMaxAge(personArr);
+      let minAge = findMinAge(personArr);
+      let AverageAge = findAveAge(personArr);
+      let youngToOld = sortYoungestToOldest(personArr);
+
+      // adding values to html elements to display on screen
+      document.getElementById("min-age").innerHTML = "minAge = " + minAge;
+      document.getElementById("max-age").innerHTML = "maxAge = " + maxAge;
+      document.getElementById("young-average").innerHTML =
+        "youngAvg = " + AverageAge;
+
+      // loop through sorted array, create div for each and add to screen
+      for (i = 0; i < youngToOld.length; i++) {
+        let el = document.createElement("div"); // create div
+        el.innerHTML = youngToOld[i].name + " " + youngToOld[i].age; // add name and age to div
+        document.body.appendChild(el); // add to screen
+      }
+    </script>
+  </body>
+</html>
